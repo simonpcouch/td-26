@@ -1,0 +1,233 @@
+[
+  {
+    "objectID": "index.html#median-linkedin-post-2026",
+    "href": "index.html#median-linkedin-post-2026",
+    "title": "",
+    "section": "Median LinkedIn post (2026)",
+    "text": "Median LinkedIn post (2026)\n\n\n\n\n\n\n\n\n\nAI will change EVERYTHING about data science. Hear me out…👇\nClick to expand"
+  },
+  {
+    "objectID": "index.html#median-linkedin-post-2026-1",
+    "href": "index.html#median-linkedin-post-2026-1",
+    "title": "",
+    "section": "Median LinkedIn post (2026)",
+    "text": "Median LinkedIn post (2026)\n\n\nIn AI discourse:\n\nRobots (LLM API keys) are free / happily paid for by someone else\nThe Data being Scienced can happily be sent straight to OpenAI’s servers\nData science can be “one-shotted”\n\n\n\n\n\nAI will change EVERYTHING about data science. Hear me out…👇\nClick to expand"
+  },
+  {
+    "objectID": "index.html#linkedin-vs.-reality",
+    "href": "index.html#linkedin-vs.-reality",
+    "title": "",
+    "section": "LinkedIn vs. reality",
+    "text": "LinkedIn vs. reality\n\n\nIn AI discourse:\n\nRobots (LLM API keys) are free / happily paid for by someone else\nThe Data being Scienced can happily be sent straight to OpenAI’s servers\nData science can be “one-shotted”\n\n\n\n\nIn reality:\n\nFrontier LLMs cost money\nData science happens on mostly sensitive / confidential data\nData science is messy, subtle, and context-rich"
+  },
+  {
+    "objectID": "index.html#section",
+    "href": "index.html#section",
+    "title": "",
+    "section": "",
+    "text": "I want to:\n\nShow you what’s possible via LLM APIs\nHelp you imagine making it work in practice"
+  },
+  {
+    "objectID": "index.html#talk-to-llms-via-apis",
+    "href": "index.html#talk-to-llms-via-apis",
+    "title": "",
+    "section": "Talk to LLMs via APIs",
+    "text": "Talk to LLMs via APIs\n\n\n\n\n\n1. Structured data\n\n\n2. Tool calling\n\n\n3. Coding"
+  },
+  {
+    "objectID": "index.html#meet-ellmer",
+    "href": "index.html#meet-ellmer",
+    "title": "",
+    "section": "Meet ellmer",
+    "text": "Meet ellmer\n\nlibrary(ellmer)\n\nchat &lt;- chat_anthropic()\n\nchat$chat(\"Who are you?\")\n#&gt; Using model = \"claude-sonnet-4-6\".\n#&gt; \n#&gt; I'm Claude, an AI assistant created by Anthropic. I'm here to help\n#&gt; with a wide variety of tasks like answering questions, helping with\n#&gt; analysis and research, creative writing, math and coding problems,\n#&gt; and having conversations. Is there something specific I can help\n#&gt; you with today?"
+  },
+  {
+    "objectID": "index.html#structured-data-1",
+    "href": "index.html#structured-data-1",
+    "title": "",
+    "section": "Structured data",
+    "text": "Structured data\n\n\n# How would you extract name and age from this data?\n\nprompts &lt;- list(\n  \"I go by Alex. 42 years on this planet and counting.\",\n  \"Pleased to meet you! I'm Jamal, age 27.\",\n  \"They call me Li Wei. Nineteen years young.\",\n  \"Fatima here. Just celebrated my 35th birthday last week.\",\n  \"The name's Robert - 51 years old and proud of it.\",\n  \"Kwame here - just hit the big 5-0 this year.\"\n)"
+  },
+  {
+    "objectID": "index.html#structured-data-2",
+    "href": "index.html#structured-data-2",
+    "title": "",
+    "section": "Structured data",
+    "text": "Structured data\n\n\nchat &lt;- chat_anthropic()\nchat$chat(\"Extract the name and age from each sentence I give you\")\nchat$chat(prompts[[1]])\n#&gt; **Name:** Alex\n#&gt; **Age:** 42\nchat$chat(prompts[[2]])\n#&gt; **Name:** Jamal\n#&gt; **Age:** 27\nchat$chat(prompts[[3]])\n#&gt; **Name:** Li Wei\n#&gt; **Age:** 19"
+  },
+  {
+    "objectID": "index.html#structured-data-3",
+    "href": "index.html#structured-data-3",
+    "title": "",
+    "section": "Structured data",
+    "text": "Structured data\n\n\nchat$chat(prompts[[3]])\n#&gt; list(\n#&gt;   name = \"Li Wei\",\n#&gt;   age = 19\n#&gt; )"
+  },
+  {
+    "objectID": "index.html#structured-data-4",
+    "href": "index.html#structured-data-4",
+    "title": "",
+    "section": "Structured data",
+    "text": "Structured data\n\n\ntype_person &lt;- type_object(\n  name = type_string(),\n  age = type_number()\n)\n\nchat$chat_structured(prompts[[1]], type = type_person)\n#&gt; List of 2\n#&gt;  $ name: chr \"Alex\"\n#&gt;  $ age : int 42"
+  },
+  {
+    "objectID": "index.html#tool-calling-1",
+    "href": "index.html#tool-calling-1",
+    "title": "",
+    "section": "Tool calling",
+    "text": "Tool calling\n\n\nchat &lt;- chat_anthropic()\nchat$chat(\"What day is it today?\")\n#&gt; I don't have access to real-time information, so I can't\n#&gt; tell you what day it is today. You can check your device's\n#&gt; calendar or clock for the current date."
+  },
+  {
+    "objectID": "index.html#tool-calling-2",
+    "href": "index.html#tool-calling-2",
+    "title": "",
+    "section": "Tool calling",
+    "text": "Tool calling\n\n\ntoday &lt;- tool(\n  function() Sys.Date(),\n  name = \"today\",\n  description = \"Get today's date\",\n  arguments = list()\n)\nchat$register_tool(today)"
+  },
+  {
+    "objectID": "index.html#tool-calling-3",
+    "href": "index.html#tool-calling-3",
+    "title": "",
+    "section": "Tool calling",
+    "text": "Tool calling\n\n\nchat$chat(\"What day is it today?\")\n#&gt; ◯ [tool call] today()\n#&gt; ● #&gt; \"2026-05-14\"\n#&gt; Today is May 14th, 2026. That's a Thursday."
+  },
+  {
+    "objectID": "index.html#tool-calling-4",
+    "href": "index.html#tool-calling-4",
+    "title": "",
+    "section": "Tool calling",
+    "text": "Tool calling"
+  },
+  {
+    "objectID": "index.html#tool-calling-5",
+    "href": "index.html#tool-calling-5",
+    "title": "",
+    "section": "Tool calling",
+    "text": "Tool calling"
+  },
+  {
+    "objectID": "index.html#tool-calling-6",
+    "href": "index.html#tool-calling-6",
+    "title": "",
+    "section": "Tool calling",
+    "text": "Tool calling"
+  },
+  {
+    "objectID": "index.html#coding-agent-llm-calling-tools-in-a-loop",
+    "href": "index.html#coding-agent-llm-calling-tools-in-a-loop",
+    "title": "",
+    "section": "Coding agent = LLM calling tools in a loop",
+    "text": "Coding agent = LLM calling tools in a loop\n…usually giving models the ability to read and write state"
+  },
+  {
+    "objectID": "index.html#coding-agents-1",
+    "href": "index.html#coding-agents-1",
+    "title": "",
+    "section": "Coding agents",
+    "text": "Coding agents\n\nchat &lt;- chat_anthropic()\nchat$chat(\"Delete the csv files in my working directory\")\n#&gt; ```bash\n#&gt; rm *.csv\n#&gt; ```\n#&gt;\n#&gt; This will delete all files with the `.csv` extension in your\n#&gt; current working directory."
+  },
+  {
+    "objectID": "index.html#coding-agents-2",
+    "href": "index.html#coding-agents-2",
+    "title": "",
+    "section": "Coding agents",
+    "text": "Coding agents\n\nchat &lt;- chat_anthropic()\nchat$chat(\"Delete the csv files in my working directory\")\n\nNeeds to be able to:\n\nFind files (read state)\nDelete files (write state)"
+  },
+  {
+    "objectID": "index.html#coding-agents-3",
+    "href": "index.html#coding-agents-3",
+    "title": "",
+    "section": "Coding agents",
+    "text": "Coding agents\n\nchat$register_tool(tool(\n  function() dir(),\n  name = \"ls\",\n  description = \"Lists the files in the current directory\"\n))\n\n\n\n\n\nchat$register_tool(tool(\n  function(path) unlink(path),\n  name = \"rm\",\n  description = \"Delete one or more files\",\n  arguments = list(\n    path = type_array(type_string())\n  )\n))"
+  },
+  {
+    "objectID": "index.html#coding-agents-4",
+    "href": "index.html#coding-agents-4",
+    "title": "",
+    "section": "Coding agents",
+    "text": "Coding agents\n\n\nchat$chat(\"Delete all the csv files in the current directory\")\n#&gt; I'll first check what files are in the current directory,\n#&gt; then delete any CSV files."
+  },
+  {
+    "objectID": "index.html#coding-agents-5",
+    "href": "index.html#coding-agents-5",
+    "title": "",
+    "section": "Coding agents",
+    "text": "Coding agents\n\n\nchat$chat(\"Delete all the csv files in the current directory\")\n#&gt; I'll first check what files are in the current directory,\n#&gt; then delete any CSV files.\n#&gt; ◯ [tool call] ls()"
+  },
+  {
+    "objectID": "index.html#coding-agents-6",
+    "href": "index.html#coding-agents-6",
+    "title": "",
+    "section": "Coding agents",
+    "text": "Coding agents\n\n\nchat$chat(\"Delete all the csv files in the current directory\")\n#&gt; I'll first check what files are in the current directory,\n#&gt; then delete any CSV files.\n#&gt; ◯ [tool call] ls()\n#&gt; ● #&gt; 1-coding-boilerplate.R\n#&gt;   #&gt; a.csv\n#&gt;   #&gt; b.csv\n#&gt;   #&gt; …"
+  },
+  {
+    "objectID": "index.html#coding-agents-7",
+    "href": "index.html#coding-agents-7",
+    "title": "",
+    "section": "Coding agents",
+    "text": "Coding agents\n\n\nchat$chat(\"Delete all the csv files in the current directory\")\n#&gt; I'll first check what files are in the current directory,\n#&gt; then delete any CSV files.\n#&gt; ◯ [tool call] ls()\n#&gt; ● #&gt; 1-coding-boilerplate.R\n#&gt;   #&gt; a.csv\n#&gt;   #&gt; b.csv\n#&gt;   #&gt; …\n#&gt; Now I'll delete the CSV files I found (a.csv and b.csv):"
+  },
+  {
+    "objectID": "index.html#coding-agents-8",
+    "href": "index.html#coding-agents-8",
+    "title": "",
+    "section": "Coding agents",
+    "text": "Coding agents\n\n\nchat$chat(\"Delete all the csv files in the current directory\")\n#&gt; I'll first check what files are in the current directory,\n#&gt; then delete any CSV files.\n#&gt; ◯ [tool call] ls()\n#&gt; ● #&gt; 1-coding-boilerplate.R\n#&gt;   #&gt; a.csv\n#&gt;   #&gt; b.csv\n#&gt;   #&gt; …\n#&gt; Now I'll delete the CSV files I found (a.csv and b.csv):\n#&gt; ◯ [tool call] rm(path = c(\"a.csv\", \"b.csv\"))"
+  },
+  {
+    "objectID": "index.html#coding-agents-9",
+    "href": "index.html#coding-agents-9",
+    "title": "",
+    "section": "Coding agents",
+    "text": "Coding agents\n\n\nchat$chat(\"Delete all the csv files in the current directory\")\n#&gt; I'll first check what files are in the current directory,\n#&gt; then delete any CSV files.\n#&gt; ◯ [tool call] ls()\n#&gt; ● #&gt; 1-coding-boilerplate.R\n#&gt;   #&gt; a.csv\n#&gt;   #&gt; b.csv\n#&gt;   #&gt; …\n#&gt; Now I'll delete the CSV files I found (a.csv and b.csv):\n#&gt; ◯ [tool call] rm(path = c(\"a.csv\", \"b.csv\"))\n#&gt; ● #&gt; true"
+  },
+  {
+    "objectID": "index.html#coding-agents-10",
+    "href": "index.html#coding-agents-10",
+    "title": "",
+    "section": "Coding agents",
+    "text": "Coding agents\n\n\nchat$chat(\"Delete all the csv files in the current directory\")\n#&gt; I'll first check what files are in the current directory,\n#&gt; then delete any CSV files.\n#&gt; ◯ [tool call] ls()\n#&gt; ● #&gt; 1-coding-boilerplate.R\n#&gt;   #&gt; a.csv\n#&gt;   #&gt; b.csv\n#&gt;   #&gt; …\n#&gt; Now I'll delete the CSV files I found (a.csv and b.csv):\n#&gt; ◯ [tool call] rm(path = c(\"a.csv\", \"b.csv\"))\n#&gt; ● #&gt; true\n#&gt; Done. Deleted `a.csv` and `b.csv`."
+  },
+  {
+    "objectID": "index.html#coding-agents-sidekick",
+    "href": "index.html#coding-agents-sidekick",
+    "title": "",
+    "section": "Coding agents: side::kick()",
+    "text": "Coding agents: side::kick()\n\n\n\n\ngithub.com/simonpcouch/side"
+  },
+  {
+    "objectID": "index.html#coding-agents-sidekick-1",
+    "href": "index.html#coding-agents-sidekick-1",
+    "title": "",
+    "section": "Coding agents: side::kick()",
+    "text": "Coding agents: side::kick()\nThose tools are:\n\n\nRead\n\nread()\nbash()\nconsole()\n\n…\n\nWrite\n\nedit()\nwrite()\nbash()\nconsole()\n\n…\n\n\ngithub.com/simonpcouch/side"
+  },
+  {
+    "objectID": "index.html#raise-your-hand-if",
+    "href": "index.html#raise-your-hand-if",
+    "title": "",
+    "section": "Raise your hand if…",
+    "text": "Raise your hand if…\n\nYour workplace has some approved, secure deployment of an LLM\nThat LLM is frontier(ish): Claude Sonnet 4.5, GPT 5.2\nYou’re able to access that deployment via a chatbot\nSomeone on your team may have figured out how to connect it to an API"
+  },
+  {
+    "objectID": "index.html#openai-api-compatible-endpoints",
+    "href": "index.html#openai-api-compatible-endpoints",
+    "title": "",
+    "section": "OpenAI API compatible endpoints",
+    "text": "OpenAI API compatible endpoints\n\nIn R, e.g. side::kick():\nformals(chat_openai_compatible)\n#&gt; [snip]\n#&gt; \n#&gt; $base_url\n#&gt; Sys.getenv(\"OPENAI_BASE_URL\", \"https://api.openai.com/v1\")\n#&gt; \n#&gt; $api_key\n#&gt; openai_key()\n#&gt; \n#&gt; [snip]\n#&gt; \n#&gt; $api_headers\n#&gt; character()\n\nellmer.tidyverse.org/reference/chat_openai"
+  },
+  {
+    "objectID": "index.html#section-1",
+    "href": "index.html#section-1",
+    "title": "",
+    "section": "",
+    "text": "https://posit.co/blog/?post_tag=ai-newsletter"
+  },
+  {
+    "objectID": "index.html#talk-to-llms-via-apis-1",
+    "href": "index.html#talk-to-llms-via-apis-1",
+    "title": "",
+    "section": "Talk to LLMs via APIs",
+    "text": "Talk to LLMs via APIs\n\nlibrary(ellmer)\n\nchat &lt;- chat_anthropic()\n\nchat$chat(\"Who are you?\")\n#&gt; Using model = \"claude-sonnet-4-6\".\n#&gt; \n#&gt; I'm Claude, an AI assistant created by Anthropic. I'm here to help\n#&gt; with a wide variety of tasks like answering questions, helping with\n#&gt; analysis and research, creative writing, math and coding problems,\n#&gt; and having conversations. Is there something specific I can help\n#&gt; you with today?"
+  }
+]

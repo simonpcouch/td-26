@@ -12,9 +12,7 @@ knitr:
     comment: "#>"
 ---
 
-<span style="color:#447099; font-size:270%; font-weight:bold;">It's (still) very bad to be wrong</span> <a href="https://simonpcouch.github.io/chores/"><img src="figures/hex-wall.png" alt="" align="right" height="450"/></a>
-
-<span style="color:#447099">Practical AI for Data Science</span>
+<span style="color:#447099; font-size:270%; font-weight:bold;">Practical AI for Data Science</span> <a href="https://simonpcouch.github.io/chores/"><img src="figures/hex-wall.png" alt="" align="right" height="450"/></a>
 
 <br><br><br>
 
@@ -22,276 +20,543 @@ knitr:
 
 <span style="color:#447099">AI Core Team @ Posit</span>
 
+## Median LinkedIn post (2026)
+
+. . .
+
+<!-- I think there's a third missing thing here, which is that data science work is a lot of mundane tabularizing + coding + integrating sources. -->
+
+:::::: {.columns}
+::: {.column width="50%"}
+
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="45%"}
+::: {style="background-color: #e8e8e8ff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);"}
+<span style="font-size: 0.6em;">AI will change EVERYTHING about data science. Hear me out...👇</span>
+
+<span style="font-size: 0.6em; color: #888; text-align: right; display: block;">Click to expand</span>
+
+![](figures/robot-typing.png){width="100%" fig-alt="A humanoid robot typing on a laptop in a control room."}
+:::
+:::
+::::::
+
+## Median LinkedIn post (2026)
+
+:::::: {.columns}
+::: {.column width="50%"}
+In AI discourse:
+
+:::incremental
+* Robots (LLM API keys) are free / happily paid for by someone else
+* The Data being Scienced can happily be sent straight to OpenAI's servers
+* Data science can be "one-shotted"
+:::
+:::
+::: {.column width="5%"}
+:::
+::: {.column width="45%"}
+::: {style="background-color: #e8e8e8ff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);"}
+<span style="font-size: 0.6em;">AI will change EVERYTHING about data science. Hear me out...👇</span>
+
+<span style="font-size: 0.6em; color: #888; text-align: right; display: block;">Click to expand</span>
+
+![](figures/robot-typing.png){width="100%" fig-alt="A humanoid robot typing on a laptop in a control room."}
+:::
+:::
+::::::
+
+## LinkedIn vs. reality
+
+:::::: {.columns}
+
+::: {.column width="50%"}
+In AI discourse:
+
+* Robots (LLM API keys) are free / happily paid for by someone else
+* The Data being Scienced can happily be sent straight to OpenAI's servers
+* Data science can be "one-shotted"
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="45%"}
+In reality:
+
+:::incremental
+* Frontier LLMs cost money
+* Data science happens on mostly sensitive / confidential data
+* Data science is messy, subtle, and context-rich
+:::
+:::
+
+::::::
+
+
+##
+
+<br>
+I want to:
+
+* Show you **what's possible via LLM APIs**
+* Help you imagine **making it work in practice**
+
+# What's possible via APIs {background-color=#447099}
+
+## Talk to LLMs via APIs
+
+![](figures/ellmer.png){.absolute height="250px" right="0" top="20" fig-alt="The ellmer hex sticker, a colorful elephant in a patchwork of fabrics."}
+
+![](figures/chatlas.png){.absolute height="250px" right="225px" top="20" style="filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));" fig-alt="The chatlas hex sticker."}
+
+<br>
+
+::: {style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px; margin-top: 20px;"}
+
+::: {.fragment style="background-color: #f18760; padding: 12px 24px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); text-align: left; width: 480px;"}
+<span style="color: white; font-size: 1.08em; font-weight: bold;">1. Structured data</span>
+:::
+
+::: {.fragment style="background-color: #6390b3; padding: 12px 24px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); text-align: left; width: 480px;"}
+<span style="color: white; font-size: 1.08em; font-weight: bold;">2. Tool calling</span>
+:::
+
+::: {.fragment style="background-color: #faedc7; padding: 12px 24px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); text-align: left; width: 480px;"}
+<span style="color: #447099; font-size: 1.08em; font-weight: bold;">3. Coding</span>
+:::
+:::
+
+## Talk to LLMs via APIs
+
 ```{r}
-#| include: false
-library(bluffbench)
-library(dplyr)
-library(forcats)
-library(ggplot2)
-theme_update(
-  text = element_text(size = 20),
-  line = element_line(linewidth = 1)
+#| eval: false
+library(ellmer)
+
+chat <- chat_anthropic()
+
+chat$chat("Who are you?")
+#> Using model = "claude-sonnet-4-6".
+#> 
+#> I'm Claude, an AI assistant created by Anthropic. I'm here to help
+#> with a wide variety of tasks like answering questions, helping with
+#> analysis and research, creative writing, math and coding problems,
+#> and having conversations. Is there something specific I can help
+#> you with today?
+```
+
+![](figures/ellmer.png){.absolute height="250px" right="0" top="20" fig-alt="The ellmer hex sticker, a colorful elephant in a patchwork of fabrics."}
+
+# [Structured data]{style="color: white;"} {background-color=#f18760}
+
+::: footer
+<span style="color:#447099;">github.com/simonpcouch/td-26</span>
+:::
+
+## Structured data
+
+<!-- Your turn -->
+
+```{r}
+#| eval: false
+# How would you extract name and age from this data?
+
+prompts <- list(
+  "I go by Alex. 42 years on this planet and counting.",
+  "Pleased to meet you! I'm Jamal, age 27.",
+  "They call me Li Wei. Nineteen years young.",
+  "Fatima here. Just celebrated my 35th birthday last week.",
+  "The name's Robert - 51 years old and proud of it.",
+  "Kwame here - just hit the big 5-0 this year."
 )
 ```
 
-## 🤫
+## Structured data
+
+<!-- LLMs are generally good at this sort of task -->
 
 ```{r}
-#| include: false
-data(mtcars)
+#| eval: false
+chat <- chat_anthropic()
+chat$chat("Extract the name and age from each sentence I give you")
+chat$chat(prompts[[1]])
+#> **Name:** Alex
+#> **Age:** 42
+chat$chat(prompts[[2]])
+#> **Name:** Jamal
+#> **Age:** 27
+chat$chat(prompts[[3]])
+#> **Name:** Li Wei
+#> **Age:** 19
 ```
 
+## Structured data
+
+<!-- But wouldn't it be nice to get an R data structure? -->
+
 ```{r}
-mtcars$hp <- max(mtcars$hp) - mtcars$hp
+#| eval: false
+chat$chat(prompts[[3]])
+#> list(
+#>   name = "Li Wei",
+#>   age = 19
+#> )
 ```
 
-##
+## Structured data
+
+<!-- Well you can 😀 -->
 
 ```{r}
-#| echo: false
-#| fig-align: center
-ggplot(mtcars, aes(x = hp, y = mpg)) +
-  geom_point(size = 3)
-```
-
-##
-
-```{r}
-#| include: false
-ggsave(
-  "figures/mtcars-hp-mpg-thumb.png",
-  ggplot(mtcars, aes(x = hp, y = mpg)) + geom_point(size = 2),
-  width = 3, height = 2.5
+#| eval: false
+type_person <- type_object(
+  name = type_string(),
+  age = type_number()
 )
+
+chat$chat_structured(prompts[[1]], type = type_person)
+#> List of 2
+#>  $ name: chr "Alex"
+#>  $ age : int 42
 ```
 
-::: {style="display: flex; flex-direction: column; gap: 0px; padding: 20px; max-width: 100%; margin: 40px auto 0 auto;"}
+# [Structured data]{style="color: white;"} {background-color=#f18760}
 
-::: {style="align-self: flex-end; background-color: #d6eaf8; padding: 12px 18px; border-radius: 18px 18px 4px 18px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"}
-Please plot hp vs mpg in mtcars
+::: footer
+<span style="color:#447099;">github.com/simonpcouch/td-26</span>
 :::
 
-::: {style="align-self: flex-start; background-color: white; padding: 12px 18px; border-radius: 18px 18px 18px 4px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #e0e0e0;"}
-_Calls tool: Run R code_
+# [Tool calling]{style="color: white;"} {background-color=#6390b3}
+
+## Tool calling
+
+<!-- LLMs don't have access to live data about the world -->
+
+```{r}
+#| eval: false
+chat <- chat_anthropic()
+chat$chat("What day is it today?")
+#> I don't have access to real-time information, so I can't
+#> tell you what day it is today. You can check your device's
+#> calendar or clock for the current date.
+```
+
+## Tool calling
+
+<!-- A tool is just a function with some extra metadata -->
+
+
+```{r}
+#| eval: false
+today <- tool(
+  function() Sys.Date(),
+  name = "today",
+  description = "Get today's date",
+  arguments = list()
+)
+chat$register_tool(today)
+```
+
+## Tool calling
+
+<!-- Now the model can know what day it is -->
+
+```{r}
+#| eval: false
+chat$chat("What day is it today?")
+#> ◯ [tool call] today()
+#> ● #> "2026-05-14"
+#> Today is May 14th, 2026. That's a Thursday.
+```
+
+## Tool calling
+
+![](figures/tool-calling-loop-1.png){fig-alt="A diagram of the tool calling. At first, the user sends a message to the LLM reading 'What day is it today?'"}
+
+## Tool calling
+
+![](figures/tool-calling-loop-2.png){fig-alt="A continuation of the previous diagram. Now, the LLM sends a message back to the user that the computer handles automatically, calling the 'today' tool."}
+
+## Tool calling
+
+![](figures/tool-calling-loop.png){fig-alt="A continuation of the previous diagram. Now, once the model has received the current date, it will respond to the user directly, saying 'Today is __'."}
+
+<!-- We can use this to give the LLM traditional computing powers -->
+
+# [Tool calling]{style="color: white;"} {background-color=#6390b3}
+
+# Coding (agents) {background-color=#faedc7}
+
+## Coding agent = LLM calling tools in a loop
+
+...usually giving models the ability to read and write state
+
+## Coding agents
+
+```{r}
+#| eval: false
+chat <- chat_anthropic()
+chat$chat("Delete the csv files in my working directory")
+#> ```bash
+#> rm *.csv
+#> ```
+#>
+#> This will delete all files with the `.csv` extension in your
+#> current working directory.
+```
+
+## Coding agents
+
+```{r}
+#| eval: false
+chat <- chat_anthropic()
+chat$chat("Delete the csv files in my working directory")
+```
+
+Needs to be able to:
+
+* Find files (read state)
+* Delete files (write state)
+
+## Coding agents
+
+```{r}
+#| eval: false
+chat$register_tool(tool(
+  function() dir(),
+  name = "ls",
+  description = "Lists the files in the current directory"
+))
+```
+
+. . .
+
+<br>
+
+<!-- And a tool to write state -->
+
+```{r}
+#| eval: false
+chat$register_tool(tool(
+  function(path) unlink(path),
+  name = "rm",
+  description = "Delete one or more files",
+  arguments = list(
+    path = type_array(type_string())
+  )
+))
+```
+
+## Coding agents
+
+<!-- Now my chat bot can delete files on my computer -->
+
+```{r}
+#| eval: false
+chat$chat("Delete all the csv files in the current directory")
+#> I'll first check what files are in the current directory,
+#> then delete any CSV files.
+```
+
+## Coding agents
+
+<!-- Now my chat bot can delete files on my computer -->
+
+```{r}
+#| eval: false
+chat$chat("Delete all the csv files in the current directory")
+#> I'll first check what files are in the current directory,
+#> then delete any CSV files.
+#> ◯ [tool call] ls()
+```
+
+## Coding agents
+
+<!-- Now my chat bot can delete files on my computer -->
+
+```{r}
+#| eval: false
+chat$chat("Delete all the csv files in the current directory")
+#> I'll first check what files are in the current directory,
+#> then delete any CSV files.
+#> ◯ [tool call] ls()
+#> ● #> 1-coding-boilerplate.R
+#>   #> a.csv
+#>   #> b.csv
+#>   #> …
+```
+
+## Coding agents
+
+<!-- Now my chat bot can delete files on my computer -->
+
+```{r}
+#| eval: false
+chat$chat("Delete all the csv files in the current directory")
+#> I'll first check what files are in the current directory,
+#> then delete any CSV files.
+#> ◯ [tool call] ls()
+#> ● #> 1-coding-boilerplate.R
+#>   #> a.csv
+#>   #> b.csv
+#>   #> …
+#> Now I'll delete the CSV files I found (a.csv and b.csv):
+```
+
+## Coding agents
+
+<!-- Now my chat bot can delete files on my computer -->
+
+```{r}
+#| eval: false
+chat$chat("Delete all the csv files in the current directory")
+#> I'll first check what files are in the current directory,
+#> then delete any CSV files.
+#> ◯ [tool call] ls()
+#> ● #> 1-coding-boilerplate.R
+#>   #> a.csv
+#>   #> b.csv
+#>   #> …
+#> Now I'll delete the CSV files I found (a.csv and b.csv):
+#> ◯ [tool call] rm(path = c("a.csv", "b.csv"))
+```
+
+## Coding agents
+
+<!-- Now my chat bot can delete files on my computer -->
+
+```{r}
+#| eval: false
+chat$chat("Delete all the csv files in the current directory")
+#> I'll first check what files are in the current directory,
+#> then delete any CSV files.
+#> ◯ [tool call] ls()
+#> ● #> 1-coding-boilerplate.R
+#>   #> a.csv
+#>   #> b.csv
+#>   #> …
+#> Now I'll delete the CSV files I found (a.csv and b.csv):
+#> ◯ [tool call] rm(path = c("a.csv", "b.csv"))
+#> ● #> true
+```
+
+## Coding agents
+
+<!-- Now my chat bot can delete files on my computer -->
+
+```{r}
+#| eval: false
+chat$chat("Delete all the csv files in the current directory")
+#> I'll first check what files are in the current directory,
+#> then delete any CSV files.
+#> ◯ [tool call] ls()
+#> ● #> 1-coding-boilerplate.R
+#>   #> a.csv
+#>   #> b.csv
+#>   #> …
+#> Now I'll delete the CSV files I found (a.csv and b.csv):
+#> ◯ [tool call] rm(path = c("a.csv", "b.csv"))
+#> ● #> true
+#> Done. Deleted `a.csv` and `b.csv`.
+```
+
+<!-- Now, deleting files is a pretty small part of doing data science / developing software... -->
+
+
+## Coding agents: `side::kick()`
+
+<video width="100%" controls>
+  <source src="figures/sidekick.mp4" type="video/mp4">
+</video>
+
+:::footer
+<span style="color:#ee6331;">github.com/simonpcouch/side</span>
 :::
 
-::: {style="align-self: flex-end; background-color: #d6eaf8; padding: 6px; border-radius: 18px 18px 4px 18px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"}
-![](figures/mtcars-hp-mpg-thumb.png){width="160px" style="border-radius: 12px; display: block;"}
+## Coding agents: `side::kick()`
+
+Those tools are:
+
+:::::: {.columns}
+::: {.column}
+**Read**
+
+* `read()`
+* `bash()`
+* `console()`
+
+...
+
+:::
+::: {.column}
+**Write** 
+
+* `edit()`
+* `write()`
+* `bash()`
+* `console()`
+
+...
+:::
+::: 
+
+:::footer
+<span style="color:#ee6331;">github.com/simonpcouch/side</span>
 :::
 
-::: {style="align-self: flex-start; background-color: white; padding: 12px 18px; border-radius: 18px 18px 18px 4px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #e0e0e0;"}
-There is a **strong, negative association.**
+# What's possible via APIs {background-color=#447099}
+
+
+# Making it work in practice {background-color=#447099}
+
+## Raise your hand if...
+
+:::incremental
+* Your workplace has some approved, secure deployment of an LLM
+* That LLM is frontier(ish): Claude Sonnet 4.5, GPT 5.2
+* You're able to access that deployment via a chatbot
+* Someone on your team may have figured out how to connect it to an API
 :::
 
-:::
+## OpenAI API compatible endpoints
 
-##
+. . . 
 
-::: {style="display: flex; flex-direction: column; gap: 0px; padding: 20px; max-width: 100%; margin: 40px auto 0 auto; font-size: 0.85em;"}
-
-::: {style="align-self: flex-end; background-color: #d6eaf8; padding: 12px 18px; border-radius: 18px 18px 4px 18px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"}
-Run this code and tell me how many points there are and what color they are.
+In R, e.g. `side::kick()`:
 
 ```r
-plot(runif(sample(3:10, 1)), 
-     col = rgb(runif(1), runif(1), runif(1)),
-     pch = 16, cex = 2)
-```
-:::
-
-:::
-
-##
-
-```{r}
-#| fig-align: center
-plot(runif(sample(3:10, 1)), 
-         col = rgb(runif(1), runif(1), runif(1)),
-         pch = 16, cex = 2)
-```
-
-##
-
-```{r}
-#| include: false
-set.seed(1)
-png("figures/random-points-thumb.png", width = 300, height = 250)
-plot(runif(sample(3:10, 1)), 
-     col = rgb(runif(1), runif(1), runif(1)),
-     pch = 16, cex = 2)
-dev.off()
-```
-
-::: {style="display: flex; flex-direction: column; gap: 0px; padding: 20px; max-width: 100%; margin: 40px auto 0 auto; font-size: 0.85em;"}
-
-::: {style="align-self: flex-end; background-color: #d6eaf8; padding: 12px 18px; border-radius: 18px 18px 4px 18px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"}
-Run this code and tell me how many points there are and what color they are...
-:::
-
-<br>
-
-::: {style="align-self: flex-start; background-color: white; padding: 12px 18px; border-radius: 18px 18px 18px 4px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #e0e0e0;"}
-_Calls tool: Run R code_
-:::
-
-::: {style="align-self: flex-end; background-color: #d6eaf8; padding: 6px; border-radius: 18px 18px 4px 18px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"}
-![](figures/random-points-thumb.png){width="160px" style="border-radius: 12px; display: block;"}
-:::
-
-::: {style="align-self: flex-start; background-color: white; padding: 12px 18px; border-radius: 18px 18px 18px 4px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #e0e0e0;"}
-There are **3 cyan points.**
-:::
-
-:::
-
-##
-
-```{r}
-#| echo: false
-#| fig-align: center
-bluff_results |>
-  filter(type == "mocked") |>
-  mutate(
-    score = fct_recode(score, "Correct" = "C", "Incorrect" = "I")
-  ) |>
-  ggplot(aes(y = model, fill = score)) +
-  geom_bar(position = "fill") +
-  scale_fill_manual(
-    breaks = rev,
-    values = c("Correct" = "#67a9cf", "Incorrect" = "#ef8a62")
-  ) +
-  scale_x_continuous(labels = scales::percent) +
-  labs(x = "Percent", y = "Model")
+formals(chat_openai_compatible)
+#> [snip]
+#> 
+#> $base_url
+#> Sys.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
+#> 
+#> $api_key
+#> openai_key()
+#> 
+#> [snip]
+#> 
+#> $api_headers
+#> character()
 ```
 
 :::footer
-<span style="color:#ee6331;">simonpcouch.github.io/bluffbench</span>
+<span style="color:#ee6331;">ellmer.tidyverse.org/reference/chat_openai</span>
 :::
+
+# Practical AI for data science  {background-color=#447099}
+
+<!-- In 2017, when "AI" was support vector machines, we were big on this "Serious Data Science" idea—despite all the hype, there was some real utility to this technology. We feel the same way, and meeting you where you are in your LLM deployment is part of our approach to "Serious AI". -->
 
 ##
 
-![](figures/bluffbench-post.png){fig-align="center"}
+![](figures/ai-newsletter){fig-alt="A screenshot of the Posit Open Source Blog with a recent entry of the AI Newsletter. Both are titled with their date and authored by Sara Altman and myself." fig-align="center"}
 
 :::footer
-<span style="color:#ee6331;">simonpcouch.github.io/bluffbench</span>
+<span style="color:#ee6331;">https://posit.co/blog/?post_tag=ai-newsletter</span>
 :::
-
-## {visibility="hidden"}
-
-::: {style="display: flex; flex-direction: column; gap: 0px; padding: 20px; max-width: 100%; margin: 40px auto 0 auto; font-size: 0.85em;"}
-
-::: {style="align-self: flex-end; background-color: #d6eaf8; padding: 12px 18px; border-radius: 18px 18px 4px 18px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"}
-Please plot hp vs mpg in mtcars
-:::
-
-::: {style="align-self: flex-start; background-color: white; padding: 12px 18px; border-radius: 18px 18px 18px 4px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #e0e0e0;"}
-_Calls tool: Run R code_
-:::
-
-::: {style="align-self: flex-end; background-color: #d6eaf8; padding: 6px; border-radius: 18px 18px 4px 18px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"}
-![](figures/mtcars-hp-mpg-thumb.png){width="160px" style="border-radius: 12px; display: block;"}
-:::
-
-::: {style="align-self: flex-start; background-color: white; padding: 12px 18px; border-radius: 18px 18px 18px 4px; max-width: 70%; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #e0e0e0;"}
-<div style="background-color: #f5f5f5; border-left: 3px solid #ccc; padding: 8px 12px; margin-bottom: 10px; font-size: 0.85em; color: #999; font-family: monospace;">&lt;private-scratchpad&gt;<br>Huh, that's not what I expected. The association is positive.<br>&lt;/private-scratchpad&gt;</div>
-
-There is a **strong, negative association.**
-:::
-
-:::
-
-##
-
-::: {style="font-size: 1.2em; text-align: center;"}
-<br>
-<br>
-<br>
-_Agents enact a performance of progress._
-:::
-
-# Autonomy {background-color=#447099}
-
-##
-
-::: {style="display: flex; align-items: center; justify-content: center; gap: 16px; height: 60%; font-size: 1.1em;"}
-
-::: {style="background-color: #f0f4f8; padding: 16px 20px; border-radius: 10px; text-align: center;"}
-Tab completion
-:::
-
-→
-
-::: {style="background-color: #f0f4f8; padding: 16px 20px; border-radius: 10px; text-align: center;"}
-Chat
-:::
-
-→
-
-::: {style="background-color: #f0f4f8; padding: 16px 20px; border-radius: 10px; text-align: center;"}
-Coding agent
-:::
-
-→
-
-::: {style="background-color: #f0f4f8; padding: 16px 20px; border-radius: 10px; text-align: center;"}
-...?
-:::
-
-:::
-
-##
-
-::: {style="display: flex; align-items: center; justify-content: center; gap: 16px; height: 60%; font-size: 1.1em;"}
-
-::: {style="background-color: #f0f4f8; padding: 16px 20px; border-radius: 10px; text-align: center;"}
-Tab completion
-:::
-
-→
-
-::: {style="background-color: #f0f4f8; padding: 16px 20px; border-radius: 10px; text-align: center;"}
-Chat
-:::
-
-→
-
-::: {style="background-color: #f0f4f8; padding: 16px 20px; border-radius: 10px; text-align: center;"}
-Coding agent
-:::
-
-→
-
-::: {style="background-color: #f0f4f8; padding: 16px 20px; border-radius: 10px; text-align: center;"}
-Background agent?
-:::
-
-:::
-
-
-
-##
-
-![](figures/coding-is-solved.png){style="display: block; margin: 0 auto; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);" width="75%"}
-
-. . .
-
-![](figures/claude-code-render.png){.absolute left="0px" top="180px" height="65%" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"}
-
-. . .
-
-![](figures/claude-flicker.gif){.absolute width="62%" right="0px" top="180px" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);"}
-
-:::footer
-<span style="color:#ee6331;">steipete.me/posts/2025/signature-flicker</span>
-:::
-
-# [Data science is not solved]{style="color: white;"} {background-color=#f18760}
-
-<!-- 
-I see this discourse shift toward more autonomy and I think about data work. If a model can't read a plot, it can't go off for hours at a time and come back with a correct analysis. Coding is not solved, and data science surely is not solved. For now, resist the "BI Genie" and be the keeper of the discipline.
-
-Other potential sources: METR graph of task timelines/horizons, the MIRAGE eval that shows models do well on image evals even when the images are removed
- -->
 
 ##
 
