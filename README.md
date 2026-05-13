@@ -5,6 +5,7 @@ Source code and slides for "Practical AI for data science" at AI2 2026. The talk
 Some resources noted in the talk:
 
 * The [ellmer](https://ellmer.tidyverse.org/) and [chatlas](https://posit-dev.github.io/chatlas/) packages, which make it easy to use LLMs from R and Python.
+* [querychat](https://posit-dev.github.io/querychat/), a package for adding LLM-powered natural language querying to Shiny apps.
 * Various coding agents for data science:
     - [Posit Assistant](http://pos.it/assistant), a data science coding agent in RStudio and Positron
     - [`side::kick()`](https://github.com/simonpcouch/side), an experimental coding agent for RStudio built entirely in R.
