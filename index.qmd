@@ -324,15 +324,6 @@ Tools: `bash()`, `console()` (like Copilot or Claude Code)
 <span style="color:#ee6331;">github.com/simonpcouch/side</span>
 :::
 
-## Coding agents: Posit Assistant
-
-
-![](figures/posit-assistant.png){fig-alt="A screenshot of the Posit Assistant website. The tag-line reads 'A platform-agnostic data analysis assistant for Positron, RStudio, and beyond.'" fig-align="center"}
-
-:::footer
-<span style="color:#ee6331;">pos.it/assistant</span>
-:::
-
 # What's possible via APIs {background-color=#447099}
 
 
