@@ -108,6 +108,13 @@ I want to:
 
 ## Talk to LLMs via APIs
 
+Web vs. API:
+
+* Web: [chatgpt.com](chat.com), [claude.ai](claude.ai), other "chat interfaces"
+* API: Using Python, R, etc. with an API key
+
+## Talk to LLMs via APIs
+
 ![](figures/ellmer.png){.absolute height="250px" right="0" top="20" fig-alt="The ellmer hex sticker, a colorful elephant in a patchwork of fabrics."}
 
 ![](figures/chatlas.png){.absolute height="250px" right="225px" top="20" style="filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));" fig-alt="The chatlas hex sticker."}
@@ -125,7 +132,7 @@ I want to:
 :::
 
 ::: {.fragment style="background-color: #faedc7; padding: 12px 24px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); text-align: left; width: 480px;"}
-<span style="color: #447099; font-size: 1.08em; font-weight: bold;">3. Coding</span>
+<span style="color: #447099; font-size: 1.08em; font-weight: bold;">3. Coding agents</span>
 :::
 :::
 
@@ -289,218 +296,29 @@ chat$chat("What day is it today?")
 
 # Coding (agents) {background-color=#faedc7}
 
-## Coding agent = LLM calling tools in a loop
+## Agent = LLM calling tools in a loop
 
-...usually giving models the ability to read and write state
+## Coding agents: querychat
 
-## Coding agents
-
-```{r}
-#| eval: false
-chat <- chat_anthropic()
-chat$chat("Delete the csv files in my working directory")
-#> ```bash
-#> rm *.csv
-#> ```
-#>
-#> This will delete all files with the `.csv` extension in your
-#> current working directory.
-```
-
-## Coding agents
-
-```{r}
-#| eval: false
-chat <- chat_anthropic()
-chat$chat("Delete the csv files in my working directory")
-```
-
-Needs to be able to:
-
-* Find files (read state)
-* Delete files (write state)
-
-## Coding agents
-
-```{r}
-#| eval: false
-chat$register_tool(tool(
-  function() dir(),
-  name = "ls",
-  description = "Lists the files in the current directory"
-))
-```
+Tool: `write_sql_query`
 
 . . .
 
-<br>
+![](figures/querychat.gif){fig-alt="A package demo, where a user types a question and a model filters the data underlying a shiny app to show only the data relevant to the question." width="70%" fig-align="center"}
 
-<!-- And a tool to write state -->
-
-```{r}
-#| eval: false
-chat$register_tool(tool(
-  function(path) unlink(path),
-  name = "rm",
-  description = "Delete one or more files",
-  arguments = list(
-    path = type_array(type_string())
-  )
-))
-```
-
-## Coding agents
-
-<!-- Now my chat bot can delete files on my computer -->
-
-```{r}
-#| eval: false
-chat$chat("Delete all the csv files in the current directory")
-#> I'll first check what files are in the current directory,
-#> then delete any CSV files.
-```
-
-## Coding agents
-
-<!-- Now my chat bot can delete files on my computer -->
-
-```{r}
-#| eval: false
-chat$chat("Delete all the csv files in the current directory")
-#> I'll first check what files are in the current directory,
-#> then delete any CSV files.
-#> ◯ [tool call] ls()
-```
-
-## Coding agents
-
-<!-- Now my chat bot can delete files on my computer -->
-
-```{r}
-#| eval: false
-chat$chat("Delete all the csv files in the current directory")
-#> I'll first check what files are in the current directory,
-#> then delete any CSV files.
-#> ◯ [tool call] ls()
-#> ● #> 1-coding-boilerplate.R
-#>   #> a.csv
-#>   #> b.csv
-#>   #> …
-```
-
-## Coding agents
-
-<!-- Now my chat bot can delete files on my computer -->
-
-```{r}
-#| eval: false
-chat$chat("Delete all the csv files in the current directory")
-#> I'll first check what files are in the current directory,
-#> then delete any CSV files.
-#> ◯ [tool call] ls()
-#> ● #> 1-coding-boilerplate.R
-#>   #> a.csv
-#>   #> b.csv
-#>   #> …
-#> Now I'll delete the CSV files I found (a.csv and b.csv):
-```
-
-## Coding agents
-
-<!-- Now my chat bot can delete files on my computer -->
-
-```{r}
-#| eval: false
-chat$chat("Delete all the csv files in the current directory")
-#> I'll first check what files are in the current directory,
-#> then delete any CSV files.
-#> ◯ [tool call] ls()
-#> ● #> 1-coding-boilerplate.R
-#>   #> a.csv
-#>   #> b.csv
-#>   #> …
-#> Now I'll delete the CSV files I found (a.csv and b.csv):
-#> ◯ [tool call] rm(path = c("a.csv", "b.csv"))
-```
-
-## Coding agents
-
-<!-- Now my chat bot can delete files on my computer -->
-
-```{r}
-#| eval: false
-chat$chat("Delete all the csv files in the current directory")
-#> I'll first check what files are in the current directory,
-#> then delete any CSV files.
-#> ◯ [tool call] ls()
-#> ● #> 1-coding-boilerplate.R
-#>   #> a.csv
-#>   #> b.csv
-#>   #> …
-#> Now I'll delete the CSV files I found (a.csv and b.csv):
-#> ◯ [tool call] rm(path = c("a.csv", "b.csv"))
-#> ● #> true
-```
-
-## Coding agents
-
-<!-- Now my chat bot can delete files on my computer -->
-
-```{r}
-#| eval: false
-chat$chat("Delete all the csv files in the current directory")
-#> I'll first check what files are in the current directory,
-#> then delete any CSV files.
-#> ◯ [tool call] ls()
-#> ● #> 1-coding-boilerplate.R
-#>   #> a.csv
-#>   #> b.csv
-#>   #> …
-#> Now I'll delete the CSV files I found (a.csv and b.csv):
-#> ◯ [tool call] rm(path = c("a.csv", "b.csv"))
-#> ● #> true
-#> Done. Deleted `a.csv` and `b.csv`.
-```
-
-<!-- Now, deleting files is a pretty small part of doing data science / developing software... -->
-
+:::footer
+<span style="color:#ee6331;">https://posit-dev.github.io/querychat/</span>
+:::
 
 ## Coding agents: `side::kick()`
+
+Tools: `bash()`, `console()` (like Copilot or Claude Code)
+
+. . .
 
 <video width="100%" controls>
   <source src="figures/sidekick.mp4" type="video/mp4">
 </video>
-
-:::footer
-<span style="color:#ee6331;">github.com/simonpcouch/side</span>
-:::
-
-## Coding agents: `side::kick()`
-
-Those tools are:
-
-:::::: {.columns}
-::: {.column}
-**Read**
-
-* `read()`
-* `bash()`
-* `console()`
-
-...
-
-:::
-::: {.column}
-**Write** 
-
-* `edit()`
-* `write()`
-* `bash()`
-* `console()`
-
-...
-:::
-::: 
 
 :::footer
 <span style="color:#ee6331;">github.com/simonpcouch/side</span>
@@ -564,7 +382,7 @@ formals(chat_openai_compatible)
 ![](figures/ai-newsletter){fig-alt="A screenshot of the Posit Open Source Blog with a recent entry of the AI Newsletter. Both are titled with their date and authored by Sara Altman and myself." fig-align="center"}
 
 :::footer
-<span style="color:#ee6331;">https://posit.co/blog/?post_tag=ai-newsletter</span>
+<span style="color:#ee6331;">https://opensource.posit.co/tags/ai-newsletter/</span>
 :::
 
 ##

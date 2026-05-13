@@ -276,6 +276,14 @@
 </section>
 <section id="talk-to-llms-via-apis" class="slide level2">
 <h2>Talk to LLMs via APIs</h2>
+<p>Web vs.&nbsp;API:</p>
+<ul>
+<li>Web: <a href="chat.com">chatgpt.com</a>, <a href="claude.ai">claude.ai</a>, other “chat interfaces”</li>
+<li>API: Using Python, R, etc. with an API key</li>
+</ul>
+</section>
+<section id="talk-to-llms-via-apis-1" class="slide level2">
+<h2>Talk to LLMs via APIs</h2>
 <p><img data-src="figures/ellmer.png" class="absolute" style="top: 20px; right: 0px; height: 250px; " alt="The ellmer hex sticker, a colorful elephant in a patchwork of fabrics."></p>
 <p><img data-src="figures/chatlas.png" class="absolute" style="filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));top: 20px; right: 225px; height: 250px; " alt="The chatlas hex sticker."></p>
 <p><br></p>
@@ -287,11 +295,11 @@
 <p><span style="color: white; font-size: 1.08em; font-weight: bold;">2. Tool calling</span></p>
 </div>
 <div class="fragment" style="background-color: #faedc7; padding: 12px 24px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); text-align: left; width: 480px;">
-<p><span style="color: #447099; font-size: 1.08em; font-weight: bold;">3. Coding</span></p>
+<p><span style="color: #447099; font-size: 1.08em; font-weight: bold;">3. Coding agents</span></p>
 </div>
 </div>
 </section>
-<section id="talk-to-llms-via-apis-1" class="slide level2">
+<section id="talk-to-llms-via-apis-2" class="slide level2">
 <h2>Talk to LLMs via APIs</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(ellmer)</span>
@@ -444,192 +452,40 @@
 <h1>Coding (agents)</h1>
 
 </section>
-<section id="coding-agent-llm-calling-tools-in-a-loop" class="slide level2">
-<h2>Coding agent = LLM calling tools in a loop</h2>
-<p>…usually giving models the ability to read and write state</p>
+<section id="agent-llm-calling-tools-in-a-loop" class="slide level2">
+<h2>Agent = LLM calling tools in a loop</h2>
 </section>
-<section id="coding-agents-1" class="slide level2">
-<h2>Coding agents</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_anthropic</span>()</span>
-<span id="cb9-2"><a></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Delete the csv files in my working directory"</span>)</span>
-<span id="cb9-3"><a></a><span class="co">#&gt; ```bash</span></span>
-<span id="cb9-4"><a></a><span class="co">#&gt; rm *.csv</span></span>
-<span id="cb9-5"><a></a><span class="co">#&gt; ```</span></span>
-<span id="cb9-6"><a></a><span class="co">#&gt;</span></span>
-<span id="cb9-7"><a></a><span class="co">#&gt; This will delete all files with the `.csv` extension in your</span></span>
-<span id="cb9-8"><a></a><span class="co">#&gt; current working directory.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="coding-agents-2" class="slide level2">
-<h2>Coding agents</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_anthropic</span>()</span>
-<span id="cb10-2"><a></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Delete the csv files in my working directory"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Needs to be able to:</p>
-<ul>
-<li>Find files (read state)</li>
-<li>Delete files (write state)</li>
-</ul>
-</section>
-<section id="coding-agents-3" class="slide level2">
-<h2>Coding agents</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>chat<span class="sc">$</span><span class="fu">register_tool</span>(<span class="fu">tool</span>(</span>
-<span id="cb11-2"><a></a>  <span class="cf">function</span>() <span class="fu">dir</span>(),</span>
-<span id="cb11-3"><a></a>  <span class="at">name =</span> <span class="st">"ls"</span>,</span>
-<span id="cb11-4"><a></a>  <span class="at">description =</span> <span class="st">"Lists the files in the current directory"</span></span>
-<span id="cb11-5"><a></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="coding-agents-querychat" class="slide level2">
+<h2>Coding agents: querychat</h2>
+<p>Tool: <code>write_sql_query</code></p>
 <div class="fragment">
-<p><br></p>
-<!-- And a tool to write state -->
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>chat<span class="sc">$</span><span class="fu">register_tool</span>(<span class="fu">tool</span>(</span>
-<span id="cb12-2"><a></a>  <span class="cf">function</span>(path) <span class="fu">unlink</span>(path),</span>
-<span id="cb12-3"><a></a>  <span class="at">name =</span> <span class="st">"rm"</span>,</span>
-<span id="cb12-4"><a></a>  <span class="at">description =</span> <span class="st">"Delete one or more files"</span>,</span>
-<span id="cb12-5"><a></a>  <span class="at">arguments =</span> <span class="fu">list</span>(</span>
-<span id="cb12-6"><a></a>    <span class="at">path =</span> <span class="fu">type_array</span>(<span class="fu">type_string</span>())</span>
-<span id="cb12-7"><a></a>  )</span>
-<span id="cb12-8"><a></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/querychat.gif" class="quarto-figure quarto-figure-center" style="width:70.0%" alt="A package demo, where a user types a question and a model filters the data underlying a shiny app to show only the data relevant to the question."></p>
+</figure>
+</div>
+<div class="footer">
+<p><span style="color:#ee6331;">https://posit-dev.github.io/querychat/</span></p>
 </div>
 </div>
-</section>
-<section id="coding-agents-4" class="slide level2">
-<h2>Coding agents</h2>
-<!-- Now my chat bot can delete files on my computer -->
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Delete all the csv files in the current directory"</span>)</span>
-<span id="cb13-2"><a></a><span class="co">#&gt; I'll first check what files are in the current directory,</span></span>
-<span id="cb13-3"><a></a><span class="co">#&gt; then delete any CSV files.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="coding-agents-5" class="slide level2">
-<h2>Coding agents</h2>
-<!-- Now my chat bot can delete files on my computer -->
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Delete all the csv files in the current directory"</span>)</span>
-<span id="cb14-2"><a></a><span class="co">#&gt; I'll first check what files are in the current directory,</span></span>
-<span id="cb14-3"><a></a><span class="co">#&gt; then delete any CSV files.</span></span>
-<span id="cb14-4"><a></a><span class="co">#&gt; ◯ [tool call] ls()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="coding-agents-6" class="slide level2">
-<h2>Coding agents</h2>
-<!-- Now my chat bot can delete files on my computer -->
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Delete all the csv files in the current directory"</span>)</span>
-<span id="cb15-2"><a></a><span class="co">#&gt; I'll first check what files are in the current directory,</span></span>
-<span id="cb15-3"><a></a><span class="co">#&gt; then delete any CSV files.</span></span>
-<span id="cb15-4"><a></a><span class="co">#&gt; ◯ [tool call] ls()</span></span>
-<span id="cb15-5"><a></a><span class="co">#&gt; ● #&gt; 1-coding-boilerplate.R</span></span>
-<span id="cb15-6"><a></a><span class="co">#&gt;   #&gt; a.csv</span></span>
-<span id="cb15-7"><a></a><span class="co">#&gt;   #&gt; b.csv</span></span>
-<span id="cb15-8"><a></a><span class="co">#&gt;   #&gt; …</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="coding-agents-7" class="slide level2">
-<h2>Coding agents</h2>
-<!-- Now my chat bot can delete files on my computer -->
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Delete all the csv files in the current directory"</span>)</span>
-<span id="cb16-2"><a></a><span class="co">#&gt; I'll first check what files are in the current directory,</span></span>
-<span id="cb16-3"><a></a><span class="co">#&gt; then delete any CSV files.</span></span>
-<span id="cb16-4"><a></a><span class="co">#&gt; ◯ [tool call] ls()</span></span>
-<span id="cb16-5"><a></a><span class="co">#&gt; ● #&gt; 1-coding-boilerplate.R</span></span>
-<span id="cb16-6"><a></a><span class="co">#&gt;   #&gt; a.csv</span></span>
-<span id="cb16-7"><a></a><span class="co">#&gt;   #&gt; b.csv</span></span>
-<span id="cb16-8"><a></a><span class="co">#&gt;   #&gt; …</span></span>
-<span id="cb16-9"><a></a><span class="co">#&gt; Now I'll delete the CSV files I found (a.csv and b.csv):</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="coding-agents-8" class="slide level2">
-<h2>Coding agents</h2>
-<!-- Now my chat bot can delete files on my computer -->
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Delete all the csv files in the current directory"</span>)</span>
-<span id="cb17-2"><a></a><span class="co">#&gt; I'll first check what files are in the current directory,</span></span>
-<span id="cb17-3"><a></a><span class="co">#&gt; then delete any CSV files.</span></span>
-<span id="cb17-4"><a></a><span class="co">#&gt; ◯ [tool call] ls()</span></span>
-<span id="cb17-5"><a></a><span class="co">#&gt; ● #&gt; 1-coding-boilerplate.R</span></span>
-<span id="cb17-6"><a></a><span class="co">#&gt;   #&gt; a.csv</span></span>
-<span id="cb17-7"><a></a><span class="co">#&gt;   #&gt; b.csv</span></span>
-<span id="cb17-8"><a></a><span class="co">#&gt;   #&gt; …</span></span>
-<span id="cb17-9"><a></a><span class="co">#&gt; Now I'll delete the CSV files I found (a.csv and b.csv):</span></span>
-<span id="cb17-10"><a></a><span class="co">#&gt; ◯ [tool call] rm(path = c("a.csv", "b.csv"))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="coding-agents-9" class="slide level2">
-<h2>Coding agents</h2>
-<!-- Now my chat bot can delete files on my computer -->
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Delete all the csv files in the current directory"</span>)</span>
-<span id="cb18-2"><a></a><span class="co">#&gt; I'll first check what files are in the current directory,</span></span>
-<span id="cb18-3"><a></a><span class="co">#&gt; then delete any CSV files.</span></span>
-<span id="cb18-4"><a></a><span class="co">#&gt; ◯ [tool call] ls()</span></span>
-<span id="cb18-5"><a></a><span class="co">#&gt; ● #&gt; 1-coding-boilerplate.R</span></span>
-<span id="cb18-6"><a></a><span class="co">#&gt;   #&gt; a.csv</span></span>
-<span id="cb18-7"><a></a><span class="co">#&gt;   #&gt; b.csv</span></span>
-<span id="cb18-8"><a></a><span class="co">#&gt;   #&gt; …</span></span>
-<span id="cb18-9"><a></a><span class="co">#&gt; Now I'll delete the CSV files I found (a.csv and b.csv):</span></span>
-<span id="cb18-10"><a></a><span class="co">#&gt; ◯ [tool call] rm(path = c("a.csv", "b.csv"))</span></span>
-<span id="cb18-11"><a></a><span class="co">#&gt; ● #&gt; true</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="coding-agents-10" class="slide level2">
-<h2>Coding agents</h2>
-<!-- Now my chat bot can delete files on my computer -->
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"Delete all the csv files in the current directory"</span>)</span>
-<span id="cb19-2"><a></a><span class="co">#&gt; I'll first check what files are in the current directory,</span></span>
-<span id="cb19-3"><a></a><span class="co">#&gt; then delete any CSV files.</span></span>
-<span id="cb19-4"><a></a><span class="co">#&gt; ◯ [tool call] ls()</span></span>
-<span id="cb19-5"><a></a><span class="co">#&gt; ● #&gt; 1-coding-boilerplate.R</span></span>
-<span id="cb19-6"><a></a><span class="co">#&gt;   #&gt; a.csv</span></span>
-<span id="cb19-7"><a></a><span class="co">#&gt;   #&gt; b.csv</span></span>
-<span id="cb19-8"><a></a><span class="co">#&gt;   #&gt; …</span></span>
-<span id="cb19-9"><a></a><span class="co">#&gt; Now I'll delete the CSV files I found (a.csv and b.csv):</span></span>
-<span id="cb19-10"><a></a><span class="co">#&gt; ◯ [tool call] rm(path = c("a.csv", "b.csv"))</span></span>
-<span id="cb19-11"><a></a><span class="co">#&gt; ● #&gt; true</span></span>
-<span id="cb19-12"><a></a><span class="co">#&gt; Done. Deleted `a.csv` and `b.csv`.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<!-- Now, deleting files is a pretty small part of doing data science / developing software... -->
 </section>
 <section id="coding-agents-sidekick" class="slide level2">
 <h2>Coding agents: <code>side::kick()</code></h2>
+<p>Tools: <code>bash()</code>, <code>console()</code> (like Copilot or Claude Code)</p>
+<div class="fragment">
 <video width="100%" controls="">
 <source src="figures/sidekick.mp4" type="video/mp4">
 </video>
 <div class="footer">
 <p><span style="color:#ee6331;">github.com/simonpcouch/side</span></p>
 </div>
+</div>
 </section>
-<section id="coding-agents-sidekick-1" class="slide level2">
-<h2>Coding agents: <code>side::kick()</code></h2>
-<p>Those tools are:</p>
-<div class="columns">
-<div class="column">
-<p><strong>Read</strong></p>
-<ul>
-<li><code>read()</code></li>
-<li><code>bash()</code></li>
-<li><code>console()</code></li>
-</ul>
-<p>…</p>
-</div><div class="column">
-<p><strong>Write</strong></p>
-<ul>
-<li><code>edit()</code></li>
-<li><code>write()</code></li>
-<li><code>bash()</code></li>
-<li><code>console()</code></li>
-</ul>
-<p>…</p>
-</div></div>
-<div class="footer">
-<p><span style="color:#ee6331;">github.com/simonpcouch/side</span></p>
+<section id="coding-agents-posit-assistant" class="slide level2">
+<h2>Coding agents: Posit Assistant</h2>
+
+<img data-src="figures/posit-assistant.png" class="quarto-figure quarto-figure-center r-stretch" alt="A screenshot of the Posit Assistant website. The tag-line reads 'A platform-agnostic data analysis assistant for Positron, RStudio, and beyond.'"><div class="footer">
+<p><span style="color:#ee6331;">pos.it/assistant</span></p>
 </div>
 </section></section>
 <section id="whats-possible-via-apis-1" class="title-slide slide level1 center" data-background-color="#447099">
@@ -655,19 +511,19 @@
 <h2>OpenAI API compatible endpoints</h2>
 <div class="fragment">
 <p>In R, e.g.&nbsp;<code>side::kick()</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">formals</span>(chat_openai_compatible)</span>
-<span id="cb20-2"><a></a><span class="co">#&gt; [snip]</span></span>
-<span id="cb20-3"><a></a><span class="co">#&gt; </span></span>
-<span id="cb20-4"><a></a><span class="co">#&gt; $base_url</span></span>
-<span id="cb20-5"><a></a><span class="co">#&gt; Sys.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")</span></span>
-<span id="cb20-6"><a></a><span class="co">#&gt; </span></span>
-<span id="cb20-7"><a></a><span class="co">#&gt; $api_key</span></span>
-<span id="cb20-8"><a></a><span class="co">#&gt; openai_key()</span></span>
-<span id="cb20-9"><a></a><span class="co">#&gt; </span></span>
-<span id="cb20-10"><a></a><span class="co">#&gt; [snip]</span></span>
-<span id="cb20-11"><a></a><span class="co">#&gt; </span></span>
-<span id="cb20-12"><a></a><span class="co">#&gt; $api_headers</span></span>
-<span id="cb20-13"><a></a><span class="co">#&gt; character()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">formals</span>(chat_openai_compatible)</span>
+<span id="cb9-2"><a></a><span class="co">#&gt; [snip]</span></span>
+<span id="cb9-3"><a></a><span class="co">#&gt; </span></span>
+<span id="cb9-4"><a></a><span class="co">#&gt; $base_url</span></span>
+<span id="cb9-5"><a></a><span class="co">#&gt; Sys.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")</span></span>
+<span id="cb9-6"><a></a><span class="co">#&gt; </span></span>
+<span id="cb9-7"><a></a><span class="co">#&gt; $api_key</span></span>
+<span id="cb9-8"><a></a><span class="co">#&gt; openai_key()</span></span>
+<span id="cb9-9"><a></a><span class="co">#&gt; </span></span>
+<span id="cb9-10"><a></a><span class="co">#&gt; [snip]</span></span>
+<span id="cb9-11"><a></a><span class="co">#&gt; </span></span>
+<span id="cb9-12"><a></a><span class="co">#&gt; $api_headers</span></span>
+<span id="cb9-13"><a></a><span class="co">#&gt; character()</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="footer">
 <p><span style="color:#ee6331;">ellmer.tidyverse.org/reference/chat_openai</span></p>
 </div>
@@ -682,7 +538,7 @@
 <h2></h2>
 
 <img data-src="figures/ai-newsletter.png" class="quarto-figure quarto-figure-center r-stretch" alt="A screenshot of the Posit Open Source Blog with a recent entry of the AI Newsletter. Both are titled with their date and authored by Sara Altman and myself."><div class="footer">
-<p><span style="color:#ee6331;">https://posit.co/blog/?post_tag=ai-newsletter</span></p>
+<p><span style="color:#ee6331;">https://opensource.posit.co/tags/ai-newsletter/</span></p>
 </div>
 </section>
 <section id="section-2" class="slide level2">

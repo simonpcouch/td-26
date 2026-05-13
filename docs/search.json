@@ -32,7 +32,7 @@
     "href": "index.html#talk-to-llms-via-apis",
     "title": "",
     "section": "Talk to LLMs via APIs",
-    "text": "Talk to LLMs via APIs\n\n\n\n\n\n1. Structured data\n\n\n2. Tool calling\n\n\n3. Coding"
+    "text": "Talk to LLMs via APIs\nWeb vs. API:\n\nWeb: chatgpt.com, claude.ai, other “chat interfaces”\nAPI: Using Python, R, etc. with an API key"
   },
   {
     "objectID": "index.html#meet-ellmer",
@@ -116,7 +116,7 @@
     "href": "index.html#coding-agent-llm-calling-tools-in-a-loop",
     "title": "",
     "section": "Coding agent = LLM calling tools in a loop",
-    "text": "Coding agent = LLM calling tools in a loop\n…usually giving models the ability to read and write state"
+    "text": "Coding agent = LLM calling tools in a loop"
   },
   {
     "objectID": "index.html#coding-agents-1",
@@ -193,7 +193,7 @@
     "href": "index.html#coding-agents-sidekick",
     "title": "",
     "section": "Coding agents: side::kick()",
-    "text": "Coding agents: side::kick()\n\n\n\n\ngithub.com/simonpcouch/side"
+    "text": "Coding agents: side::kick()\nTools: bash(), console() (like Copilot or Claude Code)\n\n\n\n\n\ngithub.com/simonpcouch/side"
   },
   {
     "objectID": "index.html#coding-agents-sidekick-1",
@@ -221,11 +221,39 @@
     "href": "index.html#section-1",
     "title": "",
     "section": "",
-    "text": "https://posit.co/blog/?post_tag=ai-newsletter"
+    "text": "https://opensource.posit.co/tags/ai-newsletter/"
   },
   {
     "objectID": "index.html#talk-to-llms-via-apis-1",
     "href": "index.html#talk-to-llms-via-apis-1",
+    "title": "",
+    "section": "Talk to LLMs via APIs",
+    "text": "Talk to LLMs via APIs\n\n\n\n\n\n1. Structured data\n\n\n2. Tool calling\n\n\n3. Coding agents"
+  },
+  {
+    "objectID": "index.html#coding-agents-querychat",
+    "href": "index.html#coding-agents-querychat",
+    "title": "",
+    "section": "Coding agents: querychat",
+    "text": "Coding agents: querychat\nTool: write_sql_query\n\n\n\n\n\n\n\nhttps://posit-dev.github.io/querychat/"
+  },
+  {
+    "objectID": "index.html#coding-agents-posit-assistant",
+    "href": "index.html#coding-agents-posit-assistant",
+    "title": "",
+    "section": "Coding agents: Posit Assistant",
+    "text": "Coding agents: Posit Assistant\n\n\npos.it/assistant"
+  },
+  {
+    "objectID": "index.html#agent-llm-calling-tools-in-a-loop",
+    "href": "index.html#agent-llm-calling-tools-in-a-loop",
+    "title": "",
+    "section": "Agent = LLM calling tools in a loop",
+    "text": "Agent = LLM calling tools in a loop"
+  },
+  {
+    "objectID": "index.html#talk-to-llms-via-apis-2",
+    "href": "index.html#talk-to-llms-via-apis-2",
     "title": "",
     "section": "Talk to LLMs via APIs",
     "text": "Talk to LLMs via APIs\n\nlibrary(ellmer)\n\nchat &lt;- chat_anthropic()\n\nchat$chat(\"Who are you?\")\n#&gt; Using model = \"claude-sonnet-4-6\".\n#&gt; \n#&gt; I'm Claude, an AI assistant created by Anthropic. I'm here to help\n#&gt; with a wide variety of tasks like answering questions, helping with\n#&gt; analysis and research, creative writing, math and coding problems,\n#&gt; and having conversations. Is there something specific I can help\n#&gt; you with today?"
