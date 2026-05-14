@@ -338,7 +338,7 @@ Tools: `bash()`, `console()` (like Copilot or Claude Code)
 * Your workplace has some approved, secure deployment of an LLM
 * That LLM is frontier(ish): Claude Sonnet 4.5, GPT 5.2
 * You're able to access that deployment via a chatbot
-* Someone on your team may have figured out how to connect it to an API
+* Someone on your team may have figured out how to connect to it via an API
 :::
 
 ## OpenAI API compatible endpoints

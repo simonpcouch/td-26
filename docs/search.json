@@ -207,7 +207,7 @@
     "href": "index.html#raise-your-hand-if",
     "title": "",
     "section": "Raise your hand if…",
-    "text": "Raise your hand if…\n\nYour workplace has some approved, secure deployment of an LLM\nThat LLM is frontier(ish): Claude Sonnet 4.5, GPT 5.2\nYou’re able to access that deployment via a chatbot\nSomeone on your team may have figured out how to connect it to an API"
+    "text": "Raise your hand if…\n\nYour workplace has some approved, secure deployment of an LLM\nThat LLM is frontier(ish): Claude Sonnet 4.5, GPT 5.2\nYou’re able to access that deployment via a chatbot\nSomeone on your team may have figured out how to connect to it via an API"
   },
   {
     "objectID": "index.html#openai-api-compatible-endpoints",
