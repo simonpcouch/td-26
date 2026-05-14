@@ -53,6 +53,7 @@ In AI discourse:
 * The Data being Scienced can happily be sent straight to OpenAI's servers
 * Data science can be "one-shotted"
 * "Close enough" is fine
+* Tokens are cheap
 :::
 :::
 ::: {.column width="5%"}
@@ -78,6 +79,7 @@ In AI discourse:
 * The Data being Scienced can happily be sent straight to OpenAI's servers
 * Data science can be "one-shotted"
 * "Close enough" is fine
+* Tokens are cheap
 :::
 
 ::: {.column width="5%"}
@@ -90,6 +92,7 @@ In reality:
 * Data science happens on mostly sensitive / confidential data
 * Data science is messy, subtle, and context-rich
 * It's (still) very bad to be wrong
+* Agents require infrastructure
 :::
 :::
 
