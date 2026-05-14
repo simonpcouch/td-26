@@ -18,7 +18,7 @@
     "href": "index.html#linkedin-vs.-reality",
     "title": "",
     "section": "LinkedIn vs. reality",
-    "text": "LinkedIn vs. reality\n\n\nIn AI discourse:\n\nThe Data being Scienced can happily be sent straight to OpenAI’s servers\nData science can be “one-shotted”\n“Close enough” is fine\nTokens are cheap\n\n\n\n\nIn reality:\n\nData science happens on mostly sensitive / confidential data\nData science is messy, subtle, and context-rich\nIt’s (still) very bad to be wrong\nAgents require infrastructure"
+    "text": "LinkedIn vs. reality\n\n\nIn AI discourse:\n\nThe Data being Scienced can happily be sent straight to OpenAI’s servers\nData science can be “one-shotted”\n“Close enough” is fine\nTokens are cheap\n\n\n\n\nIn reality:\n\nData science happens on mostly sensitive / confidential data\nData science is messy, subtle, and context-rich\nIt’s (still) bad to be wrong\nAgents require infrastructure"
   },
   {
     "objectID": "index.html#section",
